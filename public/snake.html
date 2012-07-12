@@ -1,0 +1,101 @@
+<html>
+<head>
+	    <link rel='stylesheet', href='/stylesheets/style.css'></link>
+	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type = "text/javascript"></script>
+	 <script src="/socket.io/socket.io.js"></script>
+	 
+	 <script type ="application/javascript">
+	 	var socket = io.connect();
+		 	socket.on('announcement',function(msg){
+			$('#lines').append($('<p>').append($('<em>').text(msg)));	
+			});
+		socket.on('nicknames',function(nicknames){
+			$('#nicknames').empty().append($('<span> Online: </span>'));
+			for (var i in nicknames){
+				$('#nicknames').append($('<b>').text(nicknames[i]+" "));
+			}
+			});
+		socket.on('client message',message);
+			socket.on('reconnect', function () {
+			$('#lines').remove();
+			message('System', 'Reconnected to the server');
+			});
+
+			socket.on('reconnecting', function () {
+				message('System', 'Attempting to re-connect to the server');
+			});
+
+				socket.on('error', function (e) {
+					message('System', e ? e : 'A unknown error occurred');
+			});
+		function message(from,msg){
+		$('#lines').append($('<p>').append($('<b>').text(from),msg));
+	};
+
+
+	
+	$(document).ready(function(){
+		$('#set-nickname').submit(function(){
+			
+			socket.emit('nickname',$('#nick').val(),function(valid){
+
+				$('#connecting').css('display','block');
+				if(valid){
+					
+					startGame($('#nick').val());
+					$('#message').css('visibility','visible');
+					$('#set-nickname').css('display','none');
+					$('#messages').css('display','block');
+					$('#nickname-outcome').css('display','block');
+				} else {
+					$('#nickname-conflict').css('display','block');
+				}
+				});
+				
+				return false;
+			});
+		$('#message').submit(function(){
+			message("me",$('#message-body').val());
+			socket.emit('client message',$('#message-body').val());
+			$('#message-body').val('').focus();
+			return false;
+			});
+
+		
+	});
+	 </script>
+	 <script src="gameClient/client.js"></script>
+</head>
+<body>
+
+	<div id="container">
+		<div id="nickname"
+		<div id="header">
+		</div>
+		<canvas id ="canvas" width="400" height="400">
+		</canvas>
+		<div id ="chatclient">
+			<div id = "nickname">
+				<form id="set-nickname">
+					<p> Hey Welcome to multiSnake. Enter a nickname and hit enter</p>
+					<input id="nick"></input>
+
+				</form>
+				<div id = "nickname-outcome">
+				<p id="nickname-conflict">sorry this one's in use</p>
+				<div id="connecting"> sockets connecting </div>
+				<div id ="messages">
+					<div id ="lines">
+					<div>
+					<form id ="message-form">
+						<input id="message-body"></input>
+						<button> Send </button> 
+
+					</form>
+					</div>
+					</div>
+				</div>
+				</div>
+				</div>
+</body>	
+</html>
