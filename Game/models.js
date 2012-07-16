@@ -18,6 +18,7 @@ var Entity = function(id,arrayRect,c){
 		this.entity = new Entity(id,temp,"rgb(107,142,35)");
 		this.entity.subClass="Snake";
 		this.score = 0;
+		this.nick = null;
 	};
 	var FoodSingle = function(id,x,y,size){
 		var temp = new Array(1);

@@ -28,6 +28,7 @@
 				socket.on('error', function (e) {
 					message('System', e ? e : 'A unknown error occurred');
 			});
+		
 		function message(from,msg){
 		$('#lines').append($('<p>').append($('<b>').text(from),msg));
 	};
@@ -54,7 +55,7 @@
 				
 				return false;
 			});
-		$('#message').submit(function(){
+		$('#messages').submit(function(){
 			message("me",$('#message-body').val());
 			socket.emit('client message',$('#message-body').val());
 			$('#message-body').val('').focus();
@@ -69,11 +70,14 @@
 <body>
 
 	<div id="container">
-		<div id="nickname"
+		<div id="nickname">
 		<div id="header">
 		</div>
 		<canvas id ="canvas" width="400" height="400">
 		</canvas>
+		<div id="leaderboard">
+
+		</div>
 		<div id ="chatclient">
 			<div id = "nickname">
 				<form id="set-nickname">
@@ -84,6 +88,7 @@
 				<div id = "nickname-outcome">
 				<p id="nickname-conflict">sorry this one's in use</p>
 				<div id="connecting"> sockets connecting </div>
+				<div id="nicknames"></div>
 				<div id ="messages">
 					<div id ="lines">
 					<div>
@@ -96,6 +101,9 @@
 					</div>
 				</div>
 				</div>
-				</div>
+			</div>
+			</div>
+		</div>
+	</div>
 </body>	
 </html>

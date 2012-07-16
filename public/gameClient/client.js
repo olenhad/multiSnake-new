@@ -7,17 +7,28 @@ socket.on('gameObjects',function(gameObjects){
   
 	socket.emit('recieveState',{id:g.ID,state:g.state});
 });
-
-function startGame(){
-		socket.emit('startGame',function(gameObjects,ID){
-      g.ID = ID
-			g.gameObjects = gameObjects;
-			
+function startCallback(gameObjects,ID){
+  g.ID = ID
+      g.gameObjects = gameObjects;
+      
       g.state = "up";
-			var renderID = setInterval(function(){ render(g.gameObjects);},g.RENDER_RATE);
+      var renderID = setInterval(function(){ render(g.gameObjects);},g.RENDER_RATE);
       addListeners();
-		});
+    };
+function startGame(nick){
+    g.nick = nick;
+		socket.emit('startGame',nick,startCallback);
+    setInterval(showScores,500);
 };
+function showScores(){
+  $('#leaderboard').text('');
+  for(var index in g.gameObjects){
+        if(g.gameObjects[index].hasOwnProperty('score')){
+          
+          $('#leaderboard').append($('<p>').text(JSON.stringify(g.gameObjects[index].nick)+' '+(g.gameObjects[index].score)));
+        }
+      }
+}
 function addListeners(){
 document.addEventListener('keydown',function(event){
     	
@@ -53,6 +64,11 @@ document.addEventListener('keydown',function(event){
  
 
    });
+$(window).bind("beforeunload",function(){
+  socket.emit('disconnect1');
+  //alert("before unload");
+  //return true;//confirm("you sure");
+});
 };
 function render(gameObjects){
 		var canvas = document.getElementById("canvas");

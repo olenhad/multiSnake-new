@@ -21,15 +21,16 @@ var nicknames = {};
 var gameObjects = new models.GameObjectsModel();
 io.set('log level', 1);
 io.sockets.on('connection',function(socket){
-	socket.on('startGame',function(callback){
+	socket.on('startGame',function(nick,callback){
 		if(gameObjects.length() <= 1){
 		var updateStateID = setInterval(function(){gameObjects = main.updateGameStates(gameObjects)},constants.GAME_SPEED);
 	}
 
-		var t_res = main.newSnake(gameObjects);
+		var t_res = main.newSnake(gameObjects,nick);
 		gameObjects = t_res["gameObjects"];
 		socket.broadcast.emit('gameObjects',gameObjects);
 		callback(gameObjects,t_res["ID"]);
+    socket.ID = t_res["ID"];
 	});
 	socket.on('recieveState',function(data){
 		try{
@@ -58,10 +59,18 @@ io.sockets.on('connection',function(socket){
    socket.on('disconnect',function(){
     if(!socket.nickname) return;
     delete nicknames[socket.nickname];
-    gameObjects= main.exitSnake(gameObjects,socket.nickname);
+    gameObjects= main.exitSnake(gameObjects,socket.ID);
+    socket.broadcast.emit('announcement', socket.nickname+ 'disconnected');
+    socket.broadcast.emit('nicknames',nicknames);
+   });
+   socket.on('disconnect1',function(){
+    if(!socket.nickname) return;
+    delete nicknames[socket.nickname];
+    gameObjects= main.exitSnake(gameObjects,socket.ID);
     socket.broadcast.emit('announcement', socket.nickname+ 'disconnected');
     socket.broadcast.emit('nicknames',nicknames);
    });
 
 });
+
 app.listen(process.env.PORT || 3000);

@@ -1,5 +1,6 @@
 var models = require("./models");
 var constants = require("./constants");
+
 function foodCollisionEvent(food,snake){
 	lengthenSnake(snake);
 	snake.score++;
@@ -7,9 +8,11 @@ function foodCollisionEvent(food,snake){
 	food.entity.posSet[0].y=Math.floor(Math.random()*390);
 	//delete gameObjects[food.entity.ID];
 	console.log(snake+"ate"+food);
+
 }
 function selfCollisionEvent(snake){
 	delete gameObjects[snake.entity.ID];
+
 	console.log("self collision, deleted "+snake);
 
 

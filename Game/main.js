@@ -20,10 +20,11 @@ function updateGameStates(gameObjects){
 	return (collisions.collisionEngine(gameObjects));
 }
 
-function newSnake(gameObjects){
+function newSnake(gameObjects,nick){
 	
 	//console.log(nick);
 	var snake = new models.Snake(gameObjects.idGenerator(),1,constants.INIT_CORD_X*gameObjects.length(),constants.INIT_CORD_Y*gameObjects.length());
+	snake.nick = nick;
 	gameObjects[snake.entity.ID]= snake;
 	gameObjects = generateFood(gameObjects);
 	console.log(JSON.stringify(gameObjects));
@@ -41,6 +42,7 @@ function generateFood(gameObjects){
 }
 function exitSnake(gameObjects,id){
 	delete gameObjects[id];
+	console.log(id+"deleted");
 	return gameObjects;
 }
 exports.updateGameStates = updateGameStates;
