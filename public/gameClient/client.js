@@ -80,8 +80,12 @@ function render(gameObjects){
     	for( var index in gameObjects){
     		if(gameObjects[index].hasOwnProperty('entity')){
 
+        if(index!=g.ID){
+          ctx.fillStyle = gameObjects[index].entity.colorString;
+        }else{
 
-    		ctx.fillStyle = gameObjects[index].entity.colorString;
+          ctx.fillStyle = "rgb(34,139,34)";//Forest green
+    		}
     		for(var i in gameObjects[index].entity.posSet){
     			var trect =gameObjects[index].entity.posSet[i];
     			ctx.fillRect(trect.x,trect.y,trect.w,trect.h);

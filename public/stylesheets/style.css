@@ -1,5 +1,9 @@
-
-
+#nickname-conflict{
+	display: none;
+}
+#connecting{
+	display: none;
+}
 #nickname-outcome{
   display: none;
 }
