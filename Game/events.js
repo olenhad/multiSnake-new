@@ -10,6 +10,7 @@ function foodCollisionEvent(food,snake,gameObjects){
 } else{
 
   delete gameObjects[food.entity.ID];
+  delete food;
   console.log('food deleted')
 }
 	
@@ -119,7 +120,7 @@ function numFood(gameObjects){
     if(gameObjects[i].hasOwnProperty('entity')){
       if(gameObjects[i].entity.subClass === "Food"){
         count++;
-      }w
+      }
     }
   }
   return count;

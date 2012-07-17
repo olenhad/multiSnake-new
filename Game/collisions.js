@@ -50,7 +50,7 @@ function collisionEngine(gameObjects){
 					//foodCollisionEvent(gameObjects[index2],gameObjects[index] );
 					if(foodCollision(gameObjects[index2],gameObjects[index])===true){
 						console.log("food collision 2");
-						events.foodCollisionEvent(gameObjects[index2],gameObjects[index] );
+						events.foodCollisionEvent(gameObjects[index2],gameObjects[index],gameObjects);
 					}
 				}
 			}
