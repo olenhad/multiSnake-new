@@ -10,5 +10,5 @@ This is a simple realtime multiplayer game based on the classical snake, built u
 to run:
 </p>
 <code>
-	run app.js
+	node app.js
 </code>   
