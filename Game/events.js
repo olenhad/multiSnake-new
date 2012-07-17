@@ -1,25 +1,34 @@
 var models = require("./models");
 var constants = require("./constants");
 
-function foodCollisionEvent(food,snake){
+function foodCollisionEvent(food,snake,gameObjects){
 	lengthenSnake(snake);
 	snake.score++;
-	food.entity.posSet[0].x=Math.floor(Math.random()*390);
-	food.entity.posSet[0].y=Math.floor(Math.random()*390);
+  if(numFood(gameObjects) <= numSnakes(gameObjects)){
+    food.entity.posSet[0].x=Math.floor(Math.random()*390);
+  food.entity.posSet[0].y=Math.floor(Math.random()*390);
+} else{
+
+  delete gameObjects[food.entity.ID];
+  console.log('food deleted')
+}
+	
 	//delete gameObjects[food.entity.ID];
 	console.log(snake+"ate"+food);
 
 }
-function selfCollisionEvent(snake){
+function selfCollisionEvent(snake,gameObjects){
 	delete gameObjects[snake.entity.ID];
+  
 
 	console.log("self collision, deleted "+snake);
 
 
 }
-function mutualCollisionEvent(snake1,snake2){
+function mutualCollisionEvent(snake1,snake2,gameObjects){
 	delete gameObjects[snake1.entity.ID];
 	delete gameObjects[snake2.entity.ID];
+
 	console.log("mutualCollisionEvent, deleted "+snake1+snake2);
 }
 function lengthenSnake(snake){
@@ -93,6 +102,28 @@ function updateSnake(snake){
       return snake;      
 
     };
+function numSnakes(gameObjects){
+  count = 0;
+  for(var i in gameObjects){
+    if(gameObjects[i].hasOwnProperty('entity')){
+      if(gameObjects[i].entity.subClass === "Snake"){
+        count++;
+      }
+    }
+  }
+  return count;
+}
+function numFood(gameObjects){
+  count = 0;
+  for(var i in gameObjects){
+    if(gameObjects[i].hasOwnProperty('entity')){
+      if(gameObjects[i].entity.subClass === "Food"){
+        count++;
+      }w
+    }
+  }
+  return count;
+}      
 exports.updateSnake = updateSnake;
 exports.foodCollisionEvent = foodCollisionEvent;
 exports.selfCollisionEvent = selfCollisionEvent;

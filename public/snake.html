@@ -48,6 +48,7 @@
 					$('#set-nickname').css('display','none');
 					$('#messages').css('display','block');
 					$('#nickname-outcome').css('display','block');
+					$('#nickname-conflict').css('display','none');
 				} else {
 					$('#nickname-conflict').css('display','block');
 				}
@@ -55,7 +56,7 @@
 				
 				return false;
 			});
-		$('#messages').submit(function(){
+		$('#message-form').submit(function(){
 			message("me",$('#message-body').val());
 			socket.emit('client message',$('#message-body').val());
 			$('#message-body').val('').focus();
@@ -85,21 +86,23 @@
 					<input id="nick"></input>
 
 				</form>
-				<div id = "nickname-outcome">
-				<p id="nickname-conflict">sorry this one's in use</p>
 				<div id="connecting"> sockets connecting </div>
-				<div id="nicknames"></div>
-				<div id ="messages">
-					<div id ="lines">
-					<div>
+				<div id = "nickname-outcome">
+					<div id="nickname-conflict">sorry this one's in use</div>
+					
+					<div id="nicknames"></div>
+					<div id ="messages">
+						<div id ="lines">
+						<div>
+						
+						</div>
+						</div>
+					</div>
 					<form id ="message-form">
-						<input id="message-body"></input>
-						<button> Send </button> 
+							<input id="message-body"></input>
+							<button> Send </button> 
 
 					</form>
-					</div>
-					</div>
-				</div>
 				</div>
 			</div>
 			</div>

@@ -7,6 +7,9 @@ socket.on('gameObjects',function(gameObjects){
   
 	socket.emit('recieveState',{id:g.ID,state:g.state});
 });
+socket.on('snake destroyed',function(data){
+  console.log("damn.. you lost");
+})
 function startCallback(gameObjects,ID){
   g.ID = ID
       g.gameObjects = gameObjects;
@@ -75,7 +78,7 @@ function render(gameObjects){
     	var ctx = canvas.getContext("2d");
     	ctx.clearRect(0,0,400,400);
     	for( var index in gameObjects){
-    		if(gameObjects[index]!=null){
+    		if(gameObjects[index].hasOwnProperty('entity')){
 
 
     		ctx.fillStyle = gameObjects[index].entity.colorString;

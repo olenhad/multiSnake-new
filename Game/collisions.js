@@ -9,7 +9,7 @@ function collisionEngine(gameObjects){
 		
 			if(selfCollision(gameObjects[index])===true){
 				console.log("selfCollision");
-				//selfCollisionEvent(gameObjects[index]);
+				events.selfCollisionEvent(gameObjects[index],gameObjects);
 
 			}
 			else if(selfCollision(gameObjects[index])===false){
@@ -33,7 +33,7 @@ function collisionEngine(gameObjects){
 				if(gameObjects[index].entity.subClass==="Snake" && gameObjects[index2].entity.subClass==="Snake"){
 					
 					if((index != index2) && (mutualCollision(gameObjects[index],gameObjects[index2])===true || mutualCollision(gameObjects[index2],gameObjects[index])===true )){
-						//events.mutualCollisionEvent(gameObjects[index],gameObjects[index2]);
+						events.mutualCollisionEvent(gameObjects[index],gameObjects[index2],gameObjects);
 											console.log("Mutal collision");
 					}
 
@@ -42,7 +42,7 @@ function collisionEngine(gameObjects){
 					
 					if(foodCollision(gameObjects[index],gameObjects[index2])===true){
 						console.log("food collision 1");
-						events.foodCollisionEvent(gameObjects[index],gameObjects[index2]);
+						events.foodCollisionEvent(gameObjects[index],gameObjects[index2],gameObjects);
 					}
 					
 				}

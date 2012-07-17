@@ -13,7 +13,7 @@ function updateGameStates(gameObjects){
 
 		}
 		catch(e){
-			console.log(e);
+			console.log(e+'updateGameStates');
 		}
 	}
 	}

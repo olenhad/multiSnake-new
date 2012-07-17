@@ -35,7 +35,13 @@ io.sockets.on('connection',function(socket){
 	socket.on('recieveState',function(data){
 		try{
 			//console.log(JSON.stringify(data));
-			gameObjects[data["id"]].state = data.state;
+      if(gameObjects[data["id"]]!= undefined){
+        gameObjects[data["id"]].state = data.state;
+      }
+			else if(gameObjects[data["id"]] === "deleted"){
+        socket.emit('snake destroyed',data);
+        delete gameObjects[data["id"]];
+      }
 			//console.log(JSON.stringify(gameObjects));
 		}catch(e){
 			console.log(e);
@@ -73,4 +79,4 @@ io.sockets.on('connection',function(socket){
 
 });
 
-app.listen(process.env.PORT || 8124);
+app.listen(process.env.PORT || 3000);
