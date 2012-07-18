@@ -4,19 +4,25 @@ g.RENDER_RATE = 25;
 
 socket.on('gameObjects',function(gameObjects){
 	g.gameObjects = gameObjects;
-  
+  if(!gameObjects[g.ID]){
+    $('#gameInfo').text('Oops your snake collided. Refresh to try again!')
+  }
 	socket.emit('recieveState',{id:g.ID,state:g.state});
 });
 socket.on('snake destroyed',function(data){
   console.log("damn.. you lost");
 })
+function lostMessage(){
+
+}
 function startCallback(gameObjects,ID){
   g.ID = ID
       g.gameObjects = gameObjects;
       
-      g.state = "up";
+      g.state = "none";
       var renderID = setInterval(function(){ render(g.gameObjects);},g.RENDER_RATE);
       addListeners();
+      socket.emit('recieveState',{id:g.ID,state:g.state});
     };
 function startGame(nick){
     g.nick = nick;
@@ -63,7 +69,7 @@ document.addEventListener('keydown',function(event){
       
     }
     
-    socket.emit('recieveState',{id:g.ID,state:g.state});
+    
  
 
    });

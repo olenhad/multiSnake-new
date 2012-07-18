@@ -1,3 +1,6 @@
+#canvas{
+	border-style: solid;
+}
 #nickname-conflict{
 	display: none;
 }
@@ -5,15 +8,24 @@
 	display: none;
 }
 #nickname-outcome{
-  display: none;
+	display: none;
 }
 #message{
-  visibility: hidden;
+	visibility: hidden;
 
 }
 #messages{
-  display:none;
-  width:300px;
-  height:400px;
-  overflow: scroll;
+	  display:none;
+	  width:300px;
+	  height:400px;
+	  overflow: auto;
+	  background-color:black;
+	  color:white;
+}
+#chatclient{
+
+
+	background-color: grey;
+	border-radius: 6px;
+	width: 300px;
 }

@@ -90,10 +90,10 @@ function updateSnake(snake){
     };
     
         function boundaryCheck(snake){
-      if(snake.entity.posSet[snake.entity.posSet.length-1].y <= 0 ){
+      if(snake.entity.posSet[snake.entity.posSet.length-1].y < 0 ){
         snake.entity.posSet[snake.entity.posSet.length-1].y = constants.BOARD_SIZE; 
       }
-       else if(snake.entity.posSet[snake.entity.posSet.length-1].x <= 0 ){
+       else if(snake.entity.posSet[snake.entity.posSet.length-1].x < 0 ){
         snake.entity.posSet[snake.entity.posSet.length-1].x = constants.BOARD_SIZE; 
       }
       else{
